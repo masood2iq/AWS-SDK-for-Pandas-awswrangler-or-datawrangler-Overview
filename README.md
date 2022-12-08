@@ -23,9 +23,14 @@ $ apt install -y python3
 After installation of **python3**, we need to install the python package **pip**, which can be done as
 
 ```sh
-apt install python3-pip
+$ apt install python3-pip
 ```
 
 ```sh
-pip3 install --upgrade pip
+$ pip3 install --upgrade pip
 ```
+
+```sh
+$ pip install awswrangler
+```
+
