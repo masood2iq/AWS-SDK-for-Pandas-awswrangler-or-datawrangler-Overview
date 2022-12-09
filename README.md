@@ -46,7 +46,7 @@ Create a virtual environment, which can be done with commands.
 $ python3 -m venv my_env_project
 ```
 
-![](./image/image7.png)
+![](./images/image7.png)
 
 
 The above command creates a directory named `my_env_project` in the current directory, which contains pip, interpreter, scripts, and libraries, view as
@@ -55,7 +55,7 @@ The above command creates a directory named `my_env_project` in the current dire
 $ ls my_env_project/
 ```
 
-![](./image/image24.png)
+![](./images/image24.png)
 
 
 You can now `activate the virtual environment`, with the command
@@ -64,7 +64,7 @@ You can now `activate the virtual environment`, with the command
 $ source my_env_project/bin/activate
 ```
 
-![](./image/image1.png)
+![](./images/image1.png)
 
 
 Command prompt would change to your environment and will look as shown
@@ -73,7 +73,7 @@ Command prompt would change to your environment and will look as shown
 (my_env_project) ubuntu@DESKTOP-I4BBP24:~$
 ```
 
-![](./image/image20.png)
+![](./images/image20.png)
 
 
 Now, we install the `awswrangler` package into our `virtual environment` as
