@@ -154,129 +154,105 @@ To exit from `virtual environment` use `exit` or `Ctrl+d` command. To delete a `
 The above command won't remove `my_env_project` directory, simply use `rm` command to delete it.
 
 ### <u>**WAY - 2**</u>
-Create a directory and go into it to create virtual environment as
+Create a directory and go into it to create `virtual environment` as
 
+``` sh
+$ mkdir jupyter_notebook
+```
 
-mkdir jupyter_notebook
+``` sh
+$ ls jupyter_notebook
 
-ls jupyter_notebook
+$ cd jupyter_notebook
+```
 
-cd jupyter_notebook
+![](./images/image9.png)
 
+Now, create a python `virtual environment` named `jupypter_notebook`
 
+``` sh
+$ virtualenv jupyter_notebook
+```
 
+![](./images/image22.png)
 
-Now, create a python virtual environment named "jup_notebook"
+To `activate` and get inside that `virtual environment`
 
----------------------------------------------------------------
+``` sh
+$ source jupyter_notebook/bin/activate
+```
 
-virtualenv jupyter_notebook
+![](./images/image4.png)
 
+Install `Jupyter` inside the `virtual environment`
 
+``` sh
+(jupyter_notebook) ubuntu@ubuntu:~/jupyter_notebook$ pip3 install jupyter
+```
 
+![](./images/image3.png)
 
-To activate and get inside that virtual environment
+Create a `kernel` that can be used to run `python` commands inside the `virtual environment` of `jupyter notebook`.
 
------------------------------------------------------
+``` sh
+(jupyter_notebook) ubuntu@ubuntu:~/jupyter_notebook$ ipython kernel install --user --name=python-env
+```
 
-source jupyter_notebook/bin/activate
+![](./images/image21.png)
 
+You can launch its web interface from the terminal as
 
+``` sh
+(jupyter_notebook) ubuntu@ubuntu:~/jupyter_notebook$ jupyter notebook --allow-root
+```
 
+![](./images/image8.png)
 
-install Jupyter inside the virtual environment
+You get the link to open it in your browser, click on right side, `New` drop down menu and select your `python_env`.
 
------------------------------------------------
+![](./images/image19.png)
 
-pip3 install jupyter
+Install `awswrangler` with command given in your `python_env` virtual environment.
 
-
-
-
-
-create a kernel that can be used to run python commands inside the virtual environment of jupyter notebook
-
------------------------------------------------------------------------------------------------------
-
-ipython kernel install --user --name=python-env
-
-
-
-
-you can launch its web interface from the terminal
-
----------------------------------------------------
-
-jupyter notebook --allow-root
-
-
-
-you get the link to open in your browser
-
-
- 
-
-Click on new drop down and select your environment
-
- 
-
-
-
-
-
-
-Install awswrangler with command
-
+```
 pip install awswrangler
+```
 
+![](./images/image17.png)
 
+Run the following code to test the `awswrangler` with your `S3 Bucket` to get the data from `.csv` file.
 
-
-
-Run the code
-
+``` py
 import awswrangler as wr
+s3_bucket_name='you_bucket_name'
+s3_bucket_file_path='directory_name/'
+s3_bucket_path=f"s3://{s3_bucket_name}/{s3_bucket_file_path}"
+df=wr.s3.read_csv (path=s3_bucket_path, path_suffix=['.csv'])
+print (df)
+```
 
-raw_s3_bucket = 'athena-demo-test-bucket'
+![](./images/image15.png)
 
-raw_path_dir = 'Food-Prices-2022/'
+After you are done with the project, exit from `Jupyter` from the browser and no longer need the `kernel` you can uninstall it with the command.
 
-raw_path = f"s3://{raw_s3_bucket}/{raw_path_dir}"
-
-raw_df = wr.s3.read_csv(path=raw_path, path_suffix=['.csv'],)
-
-print (raw_df)
-
-
-
-
-
-After you are done with the project and no longer need the kernel you can uninstall
-
-------------------------------------------------------------------------------------
-
-jupyter-kernelspec uninstall python-env
-
+``` sh
+(jupyter_notebook) ubuntu@ubuntu:~/jupyter_notebook$ jupyter-kernelspec uninstall python-env
+```
  
+![](./images/image2.png)
 
+To exit from `virtual environment`
 
+``` sh
+(jupyter_notebook) ubuntu@ubuntu:~/jupyter_notebook$ deactivate
+```
 
+![](./images/image5.png)
 
+To delete the `virtual environment`
 
-
-
-To exit from virtual env
-
---------------------------
-
-deactivate
-
-
-
-
-
-To delete the virtual environment
-
------------------------------------
-
+``` sh
 virtualenv --clear /home/ubuntu/jupyter-notebook/
+```
+
+![](./images/image11.png)
