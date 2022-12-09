@@ -36,6 +36,7 @@ $ apt install -y python3-venv
 
 ![](./images/image10.png)
 
+
 # To create a virtual environment for python 3, we can do it in two ways as
 
 ### <u>**WAY - 1**</u>
@@ -47,6 +48,7 @@ $ python3 -m venv my_env_project
 
 ![](./image/image7.png)
 
+
 The above command creates a directory named `my_env_project` in the current directory, which contains pip, interpreter, scripts, and libraries, view as
 
 ``` sh
@@ -54,6 +56,7 @@ $ ls my_env_project/
 ```
 
 ![](./image/image24.png)
+
 
 You can now `activate the virtual environment`, with the command
 
@@ -63,6 +66,7 @@ $ source my_env_project/bin/activate
 
 ![](./image/image1.png)
 
+
 Command prompt would change to your environment and will look as shown
 
 ``` sh
@@ -70,6 +74,7 @@ Command prompt would change to your environment and will look as shown
 ```
 
 ![](./image/image20.png)
+
 
 Now, we install the `awswrangler` package into our `virtual environment` as
 
@@ -79,6 +84,7 @@ Now, we install the `awswrangler` package into our `virtual environment` as
 
 ![](./images/image16.png)
 
+
 Now, if you didn’t configured AWS CLI, configure as
 
 ``` sh
@@ -87,6 +93,7 @@ Now, if you didn’t configured AWS CLI, configure as
 
 ![](./images/image25.png)
 
+
 Run python command inside `virtual environment` to open the interpreter
 
 ``` sh
@@ -94,6 +101,7 @@ Run python command inside `virtual environment` to open the interpreter
 ```
 
 ![](./images/image18.png)
+
 
 Every time you install a new package inside your `virtual environment`, you should be able to import it into your project.
 Now let’s test `awswrangler` with `S3 bucket`.
@@ -109,6 +117,7 @@ Now let’s test `awswrangler` with `S3 bucket`.
 ```
 
 ![](./images/image13.png)
+
 
 To exit from the interpreter, type
 
@@ -135,6 +144,7 @@ print (df)
 
 ![](./images/image6.png)
 
+
 To execute the script, run command
 
 ``` sh
@@ -143,6 +153,7 @@ To execute the script, run command
 
 ![](./images/image23.png)
 
+
 To exit from `virtual environment` use `exit` or `Ctrl+d` command. To delete a `virtual environment` run the following command
 
 ``` sh
@@ -150,6 +161,7 @@ To exit from `virtual environment` use `exit` or `Ctrl+d` command. To delete a `
 ```
 
 ![](./images/image14.png)
+
 
 The above command won't remove `my_env_project` directory, simply use `rm` command to delete it.
 
@@ -168,6 +180,7 @@ $ cd jupyter_notebook
 
 ![](./images/image9.png)
 
+
 Now, create a python `virtual environment` named `jupypter_notebook`
 
 ``` sh
@@ -175,6 +188,7 @@ $ virtualenv jupyter_notebook
 ```
 
 ![](./images/image22.png)
+
 
 To `activate` and get inside that `virtual environment`
 
@@ -184,6 +198,7 @@ $ source jupyter_notebook/bin/activate
 
 ![](./images/image4.png)
 
+
 Install `Jupyter` inside the `virtual environment`
 
 ``` sh
@@ -191,6 +206,7 @@ Install `Jupyter` inside the `virtual environment`
 ```
 
 ![](./images/image3.png)
+
 
 Create a `kernel` that can be used to run `python` commands inside the `virtual environment` of `jupyter notebook`.
 
@@ -200,6 +216,7 @@ Create a `kernel` that can be used to run `python` commands inside the `virtual 
 
 ![](./images/image21.png)
 
+
 You can launch its web interface from the terminal as
 
 ``` sh
@@ -208,9 +225,11 @@ You can launch its web interface from the terminal as
 
 ![](./images/image8.png)
 
+
 You get the link to open it in your browser, click on right side, `New` drop down menu and select your `python_env`.
 
 ![](./images/image19.png)
+
 
 Install `awswrangler` with command given in your `python_env` virtual environment.
 
@@ -219,6 +238,7 @@ pip install awswrangler
 ```
 
 ![](./images/image17.png)
+
 
 Run the following code to test the `awswrangler` with your `S3 Bucket` to get the data from `.csv` file.
 
@@ -233,6 +253,7 @@ print (df)
 
 ![](./images/image15.png)
 
+
 After you are done with the project, exit from `Jupyter` from the browser and no longer need the `kernel` you can uninstall it with the command.
 
 ``` sh
@@ -241,6 +262,7 @@ After you are done with the project, exit from `Jupyter` from the browser and no
  
 ![](./images/image2.png)
 
+
 To exit from `virtual environment`
 
 ``` sh
@@ -248,6 +270,7 @@ To exit from `virtual environment`
 ```
 
 ![](./images/image5.png)
+
 
 To delete the `virtual environment`
 
