@@ -12,25 +12,25 @@ Working with data datawrangler support reading and writing Excel, JSON, CSV, and
 
 Now, before installing **[datawrangler](https://aws-sdk-pandas.readthedocs.io/en/stable/index.html)**, we need to install the **python3** on our Linux machine, which can be done with commands
 
-```sh
+``` sh
 $ apt update
 ```  
 
-```sh
+``` sh
 $ apt install -y python3
 ```
 
 After installation of **python3**, we need to install the python package **pip**, which can be done with commands
 
-```sh
+``` sh
 $ apt install python3-pip
 ```
 
-```sh
+``` sh
 $ pip3 install --upgrade pip
 ```
 
-```sh
+``` sh
 $ apt install -y python3-venv
 ```
 
@@ -41,7 +41,7 @@ $ apt install -y python3-venv
 ### <u>**WAY - 1**</u>
 Create a virtual environment, which can be done with commands.
 
-```sh
+``` sh
 $ python3 -m venv my_env_project
 ```
 
@@ -49,7 +49,7 @@ $ python3 -m venv my_env_project
 
 The above command creates a directory named `my_env_project` in the current directory, which contains pip, interpreter, scripts, and libraries, view as
 
-```sh
+``` sh
 $ ls my_env_project/
 ```
 
@@ -57,7 +57,7 @@ $ ls my_env_project/
 
 You can now `activate the virtual environment`, with the command
 
-```sh
+``` sh
 $ source my_env_project/bin/activate
 ```
 
@@ -65,7 +65,7 @@ $ source my_env_project/bin/activate
 
 Command prompt would change to your environment and will look as shown
 
-```sh
+``` sh
 (my_env_project) ubuntu@DESKTOP-I4BBP24:~$
 ```
 
@@ -73,7 +73,7 @@ Command prompt would change to your environment and will look as shown
 
 Now, we install the `awswrangler` package into our `virtual environment` as
 
-```sh
+``` sh
 (my_env_project)$ pip install awswrangler
 ```
 
@@ -81,7 +81,7 @@ Now, we install the `awswrangler` package into our `virtual environment` as
 
 Now, if you didn’t configured AWS CLI, configure as
 
-```sh
+``` sh
 (my_env_project)$ aws configure
 ```
 
@@ -89,7 +89,7 @@ Now, if you didn’t configured AWS CLI, configure as
 
 Run python command inside `virtual environment` to open the interpreter
 
-```sh
+``` sh
 (my_env_project)$ python
 ```
 
@@ -98,7 +98,7 @@ Run python command inside `virtual environment` to open the interpreter
 Every time you install a new package inside your `virtual environment`, you should be able to import it into your project.
 Now let’s test `awswrangler` with `S3 bucket`.
 
-```sh
+``` sh
 (my_env_project) ubuntu@DESKTOP-I4BBP24:~/my_env_project$ python
 >>> import awswrangler as wr
 >>> s3_bucket_name='you_bucket_name'
@@ -112,19 +112,19 @@ Now let’s test `awswrangler` with `S3 bucket`.
 
 To exit from the interpreter, type
 
-```sh
+``` sh
 >>> quit()
 ```
 
 We can also create a python script and run from inside python 3 `virtual environment` as
 
-```sh
+``` sh
 (my_env_project) ubuntu@ubuntu:~$ vim script.py
 ```
 
 Copy and paste the given code inside the script file
 
-```
+``` py
 import awswrangler as wr
 s3_bucket_name='you_bucket_name'
 s3_bucket_file_path='directory_name/'
@@ -137,7 +137,7 @@ print (df)
 
 To execute the script, run command
 
-```sh
+``` sh
 (my_env_project) ubuntu@ubuntu:~$ python script.py
 ```
 
@@ -145,7 +145,7 @@ To execute the script, run command
 
 To exit from `virtual environment` use `exit` or `Ctrl+d` command. To delete a `virtual environment` run the following command
 
-```sh
+``` sh
 (my_env_project) ubuntu@ubuntu:~$ deactivate
 ```
 
