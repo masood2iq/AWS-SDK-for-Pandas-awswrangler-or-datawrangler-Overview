@@ -10,7 +10,7 @@ Working with data datawrangler support reading and writing Excel, JSON, CSV, and
 
 **Note:** Before working with AWS [datawrangler](https://aws-sdk-pandas.readthedocs.io/en/stable/index.html) you need to install and configure your [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) account on your Linux machine.
 
-Now, before installing **[datawrangler](https://aws-sdk-pandas.readthedocs.io/en/stable/index.html)**, we need to install the **python3** on our Linux machine, which can be done as  
+Now, before installing **[datawrangler](https://aws-sdk-pandas.readthedocs.io/en/stable/index.html)**, we need to install the **python3** on our Linux machine, which can be done with commands
 
 ```sh
 $ apt update
@@ -20,7 +20,7 @@ $ apt update
 $ apt install -y python3
 ```
 
-After installation of **python3**, we need to install the python package **pip**, which can be done as
+After installation of **python3**, we need to install the python package **pip**, which can be done with commands
 
 ```sh
 $ apt install python3-pip
@@ -31,6 +31,6 @@ $ pip3 install --upgrade pip
 ```
 
 ```sh
-$ pip install awswrangler
+$ apt install python3-venv
 ```
 
