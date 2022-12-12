@@ -36,9 +36,9 @@ $ apt install -y python3-venv
 
 ![](./images/image10.png)
 
-
+  
 # To create a virtual environment for python 3, we can do it in two ways as
-
+  
 ----
 ### <u>**WAY - 1**</u>
 ----
@@ -166,7 +166,7 @@ To exit from `virtual environment` use `exit` or `Ctrl+d` command. To delete a `
 
 
 The above command won't remove `my_env_project` directory, simply use `rm` command to delete it.
-
+  
 ----
 ### <u>**WAY - 2**</u>
 ----
