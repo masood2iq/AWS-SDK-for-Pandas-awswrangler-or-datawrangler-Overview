@@ -327,7 +327,9 @@ jupyter notebook --allow-root
 
 In jupyter notebook, launch the `python 3 environment` as shown below
 
-![]()
+![](./images/image30.png)
+
+![](./images/image31.png)
 
 
 Now install the `awswrangler` and `pandas` with command
@@ -365,9 +367,197 @@ df = wr.s3.read_csv("s3://your-bucket-name/dataset/", dataset=True)
 print (df)
 ```
 
+![](./images/image32.png)
+
+
 You can check your results in AWS S3.
 
-![]()
+![](./images/image33.png)
 
 
 Further, we can deploy the `AWS Athena` on it with serverless and query the data using `Athena` with `awswrangler`
+
+``` sh
+sls create --template aws-nodejs
+```
+
+![](./images/image34.png)
+
+  
+Empty your serverless.yml file and paste the given code to deploy AWS Glue database with crawler for AWS Athena
+
+``` sh
+echo > serverless.yml
+```
+``` sh
+vim serverless.yml
+```
+
+![](./images/image35.png)
+
+  
+``` yaml
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: ${self:custom.product}-${self:provider.stage}
+
+#useDotenv: true
+
+# app and org for use with dashboard.serverless.com
+#app: your-app-name
+#org: your-org-name
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+frameworkVersion: '3'
+
+custom:
+  DataS3BucketName: data-athena-016436653652                            # Unique name of your S3 bucket
+  DataS3BucketPath: s3://data-athena-016436653652/dataset/             # Path of data directory of your S3 bucket
+  OutputS3BucketPath: s3://data-athena-016436653652/athena-output/      # Path of Athena query output data directory of your S3 bucket
+  product: serverless
+  bucket: s3
+  database: gluedb
+  crawler: gluecrwlr
+  workgroup: athenawg
+  query: athenaqry
+
+# you can overwrite defaults here
+provider:
+  name: aws
+  region: ${opt:region, 'us-east-1'}                        # change to your region as required
+  stage: ${opt:stage, 'staging'}                            # development, stagging, testing, production
+#  profile: ${opt:aws-profile, 'ServerlessUser'}
+  stackTags:
+    Env: ${self:provider.stage}
+
+# Resources section defines metadata for the Resources.
+# Create IAM Role assumed by the crawler. For demonstration, this role is given all related permissions.
+resources:
+  Resources:
+    AWSAthenaGlueRole:
+      Type: AWS::IAM::Role
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Principal:
+                Service:
+                  - "glue.amazonaws.com"
+              Action:
+                - "sts:AssumeRole"
+        Path: "/"
+        Policies:
+          - PolicyName: AWSAthenaAccess
+            PolicyDocument:
+              Statement:
+                - Effect: Allow
+                  Action: athena:*
+                  Resource: '*'
+          - PolicyName: GlueS3Access
+            PolicyDocument:
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - glue:*
+                    - iam:ListRolePolicies
+                    - iam:GetRole
+                    - iam:GetRolePolicy
+                  Resource: '*'
+                - Effect: Allow
+                  Action:
+                    - s3:*
+                    - s3-object-lambda:*
+                  Resource: '*'
+                - Effect: Allow
+                  Action:
+                    - logs:*
+                  Resource: '*'
+                - Effect: Allow
+                  Action:
+                    - s3:GetObject
+                    - s3:PutObject
+                  Resource:
+                    - arn:aws:s3:::aws-glue-*/*
+                    - arn:aws:s3:::*/*aws-glue-*/*
+                    - arn:aws:s3:::aws-glue-*
+                - Effect: Allow
+                  Action:
+                    - logs:GetLogEvents
+                  Resource:
+                    - arn:aws:logs:*:*:/aws-glue/*
+
+# Create a database to contain tables created by the crawler.
+    AWSGlueDatabase:
+      Type: AWS::Glue::Database
+      Properties:
+        CatalogId: !Ref AWS::AccountId
+        DatabaseInput:
+          Name: database-${self:custom.product}-${self:custom.database}-${self:provider.stage}
+          Description: database-${self:custom.product}-${self:custom.database}-${self:provider.stage}
+
+# Create a crawler to crawl the data on a Raw Data S3 bucket.
+    AWSGlueCrawler:
+      DependsOn:
+        - AWSAthenaGlueRole
+        - AWSGlueDatabase
+      Type: AWS::Glue::Crawler
+      Properties:
+        Name: crawler-${self:custom.product}-${self:custom.crawler}-${self:provider.stage}
+        Description: crawler-${self:custom.product}-${self:custom.crawler}-${self:provider.stage}
+        Role:
+          Fn::GetAtt: [ AWSAthenaGlueRole, Arn ]
+        Schedule:
+          # Run crawler every day every 6 hours Monday to Friday cron(0 0/6 ? * MON-FRI *)
+          ScheduleExpression: 'cron(0 0/6 ? * MON-FRI *)'
+        DatabaseName: !Ref AWSGlueDatabase
+        Targets:
+          S3Targets:
+            - Path: ${self:custom.DataS3BucketPath}                # S3 Raw Bucket
+              Exclusions:
+                - "**.wav"
+                - "**.webm"
+                - "**.zip"
+                - "**.opus"
+                - "**.txt"
+        TablePrefix: !Sub table-${self:custom.product}-${self:custom.crawler}-${self:provider.stage}
+        SchemaChangePolicy:
+          UpdateBehavior: "UPDATE_IN_DATABASE"
+          DeleteBehavior: "LOG"
+        Configuration: "{\"Version\":1.0,\"CrawlerOutput\":{\"Partitions\":{\"AddOrUpdateBehavior\":\"InheritFromTable\"},\"Tables\":{\"AddOrUpdateBehavior\":\"MergeNewColumns\"}}}"
+
+# Create log group for glue crawler.
+    AWSGlueCrawlerLogGroup:
+      Type: AWS::Logs::LogGroup
+      Properties:
+        LogGroupName: /aws-glue/crawlers
+#        RetentionInDays: 1
+```
+
+Deploy the serverless with the command
+
+``` sh
+sls deploy
+```
+
+![](./images/image36.png)
+
+  
+Manually run the glue crawler to create metadata table
+
+![](./images/image37.png)
+
+  
+Now you can get the database and table names from glue for the querying with athena
