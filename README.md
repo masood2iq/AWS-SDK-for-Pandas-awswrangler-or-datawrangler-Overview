@@ -283,3 +283,91 @@ virtualenv --clear /home/ubuntu/jupyter-notebook/
 ```
 
 ![](./images/image11.png)
+
+  
+# How to write dataframe into S3 as .csv file with creating glue database, table and querying with Amazon Athena
+
+To write data frame into an S3 bucket as a .csv file with creating glue database, metadata table, and querying with Amazon Athena, we need to use AWS SDK Pandas for that which we can do as
+
+Clone this repository into your linux machine with the command
+
+``` sh
+git clone https://github.com/masood2iq/AWS_SDK_for_Pandas_awswrangler_or_datawrangler_Overview.git
+```
+
+Go inside the repository directory with the command
+
+``` sh
+cd AWS_SDK_for_Pandas_awswrangler_or_datawrangler_Overview
+```
+
+Create a python `virtual environment` with the command
+
+``` sh
+python3 -m venv jupyter_notebook
+```
+
+Now, activate your `virtual environment` with the command
+
+``` sh
+source jupyter_notebook/bin/activate
+```
+
+Install the jupyter notebook in your environment with the command
+
+``` sh
+pip3 install jupyter
+```
+
+Launch your virtual environment with the command
+
+``` sh
+jupyter notebook --allow-root
+```
+
+In jupyter notebook, launch the `python 3 environment` as shown below
+
+![]()
+
+
+Now install the `awswrangler` and `pandas` with command
+
+``` sh
+pip install awswrangler
+```
+``` sh
+pip install pandas
+```
+
+Now finally, we’ll create a dataframe and save it as .csv file in S3 bucket with the code as
+
+``` py
+import awswrangler as wr
+import pandas as pd
+from datetime import datetime
+
+df = pd.DataFrame(
+      data={"Title": ["Book-1", "Book-2", "Book-3"], "Prices": ["56.6", "59.87", "74.54"]},
+      columns=["Title", "Prices"]
+)
+
+# Storing data on S3
+wr.s3.to_csv(
+    df=df,
+    path="s3://your-bucket-name/dataset/",
+    dataset=True,
+)
+
+# Retrieving the data directly from Amazon S3
+df = wr.s3.read_csv("s3://your-bucket-name/dataset/", dataset=True)
+
+# Retrieving the data
+print (df)
+```
+
+You can check your results in AWS S3.
+
+![]()
+
+
+Further, we can deploy the `AWS Athena` on it with serverless and query the data using `Athena` with `awswrangler`
